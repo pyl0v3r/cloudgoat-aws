@@ -144,8 +144,8 @@ The `migrate_secrets.ps1` script contained hardcoded AWS IAM access key and secr
 1. Extract `hl_migration_project.zip` and open `migrate_secrets.ps1`.
 2. Locate the hardcoded credentials:
    ```
-   Access Key ID:     AKIA3SFMDAPO7WLZVRVE
-   Secret Access Key: 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
+   Access Key ID:     A..MD..PO....
+   Secret Access Key: ..9co.....
    ```
 3. Configure the AWS CLI with these credentials:
    ```bash

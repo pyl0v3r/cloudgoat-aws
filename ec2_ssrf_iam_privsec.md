@@ -92,7 +92,7 @@ The `get-function` API response returned plaintext IAM credentials in the `Envir
 Pacu's `lambda__enum` module independently confirmed the same credential extraction:
 ```
 [+] Secret (ENV): EC2_ACCESS_KEY_ID = AKIAVVYTW6AMGIRAQL7O
-[+] Secret (ENV): EC2_SECRET_KEY_ID = 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
+[+] Secret (ENV): EC2_SECRET_KEY_ID = oNB8x8../07Nsb0QpX8o42a
 ```
 These credentials were confirmed to belong to IAM user `wrex-cgid6sq5e1otwq` via `aws sts get-caller-identity`.
 

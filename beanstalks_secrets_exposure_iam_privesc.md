@@ -59,12 +59,12 @@ Within the `OptionSettings` array, the `aws:elasticbeanstalk:application:environ
 {
     "Namespace": "aws:elasticbeanstalk:application:environment",
     "OptionName": "SECONDARY_ACCESS_KEY",
-    "Value": "AKIAVVYTW6AMNVEYG5XS"
+    "Value": "AKIAVVY.....XS"
 },
 {
     "Namespace": "aws:elasticbeanstalk:application:environment",
     "OptionName": "SECONDARY_SECRET_KEY",
-    "Value": "qAGdSrws7sdwafK590lnfXxZBrsTqhSqkAyu4uLd"
+    "Value": "qAGdSrws7s...Ld"
 }
 ```
 
@@ -122,7 +122,7 @@ The `cgid40f7j9opmj_low_priv_user` had sufficient Elastic Beanstalk read permiss
 The configuration response disclosed a live IAM key pair in plaintext:
 ```
 SECONDARY_ACCESS_KEY=AKIAVVYTW6AMNVEYG5XS
-SECONDARY_SECRET_KEY=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
+SECONDARY_SECRET_KEY=qAG...ZBrsTqhSqkAyu4uLd
 ```
 These were confirmed via `aws sts get-caller-identity` to belong to IAM user `cgid40f7j9opmj_secondary_user`.
 
@@ -194,7 +194,7 @@ $ aws iam create-access-key --user-name cgid40f7j9opmj_admin_user --profile clou
         "UserName": "cgid40f7j9opmj_admin_user",
         "AccessKeyId": "AKIAVVYTW6AMIX7H6NUS",
         "Status": "Active",
-        "SecretAccessKey": "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",
+        "SecretAccessKey": "ix+8e4dwd....wmlLu7d8mGmsTkhNDZ",
         "CreateDate": "2026-06-07T20:52:36+00:00"
     }
 }

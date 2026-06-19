@@ -127,7 +127,7 @@ The `assume-role` call succeeded without restriction and returned valid temporar
 {
     "Credentials": {
         "AccessKeyId": "ASIAVVYTW6AMGG6NTNEJ",
-        "SecretAccessKey": "gaB2a6jiH+x1ZTn9oHrUN5F7G6S42aOcX8qkYpMz",
+        "SecretAccessKey": "gaB2a6ji...5F7G6S42aOcX8qkYpMz",
         "SessionToken": "<session-token>",
         "Expiration": "2026-06-07T13:46:02+00:00"
     },
