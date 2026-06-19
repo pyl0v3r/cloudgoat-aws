@@ -23,9 +23,9 @@ aws sts get-caller-identity --profile cloudgoat_solus
 ```
 ```json
 {
-    "UserId": "AIDAVVYTW6AMFAS34MQPT",
-    "Account": "390346502168",
-    "Arn": "arn:aws:iam::390346502168:user/solus-cgid6sq5e1otwq"
+    "UserId": "AID...AVMQPT",
+    "Account": "3903..02168",
+    "Arn": "arn:aws..5e1otwq"
 }
 ```
 
@@ -65,7 +65,7 @@ OWASP Top 10 2021 – A07: Identification and Authentication Failures
 The `solus` IAM user had permission to call `lambda:ListFunctions` and `lambda:GetFunction`. Enumerating Lambda functions revealed that the function `cg-lambda-cgid6sq5e1otwq` stored AWS IAM credentials directly in its environment variables — in plaintext and fully readable via the API. These credentials belonged to a second IAM user (`wrex`) with EC2 permissions.
 
 #### Affected Functionality
-- Lambda function: `cg-lambda-cgid6sq5e1otwq`
+- Lambda function: `cg-lambda-ctwq`
 - Environment variables: `EC2_ACCESS_KEY_ID`, `EC2_SECRET_KEY_ID`
 
 #### Steps to Reproduce
@@ -84,15 +84,15 @@ The `get-function` API response returned plaintext IAM credentials in the `Envir
 ```json
 "Environment": {
     "Variables": {
-        "EC2_ACCESS_KEY_ID": "AKIAVVYTW6AMGIRAQL7O",
-        "EC2_SECRET_KEY_ID": "oNB8x86QTEm48/GiFC2b3XEt8/07Nsb0QpX8o42a"
+        "EC2_ACCESS_KEY_ID": "A..RAQL7O",
+        "EC2_SECRET_KEY_ID": "oNB..7Nsb0QpX8o42a"
     }
 }
 ```
 Pacu's `lambda__enum` module independently confirmed the same credential extraction:
 ```
-[+] Secret (ENV): EC2_ACCESS_KEY_ID = AKIAVVYTW6AMGIRAQL7O
-[+] Secret (ENV): EC2_SECRET_KEY_ID = oNB8x8../07Nsb0QpX8o42a
+[+] Secret (ENV): EC2_ACCESS_KEY_ID = AKIAV..7O
+[+] Secret (ENV): EC2_SECRET_KEY_ID = oNB...o42a
 ```
 These credentials were confirmed to belong to IAM user `wrex-cgid6sq5e1otwq` via `aws sts get-caller-identity`.
 
@@ -159,8 +159,8 @@ The SSRF request to the IMDS endpoint returned temporary IAM credentials for the
 {
     "Code": "Success",
     "Type": "AWS-HMAC",
-    "AccessKeyId": "ASIAVVYTW6AMFVSNC2SV",
-    "SecretAccessKey": "94zA7oN8FtMsqZzl3JSWpdmmODClwJw1vGJufeR6",
+    "AccessKeyId": "ASI..FVSNC2SV",
+    "SecretAccessKey": "94zA7..ufeR6",
     "Token": "<session-token>",
     "Expiration": "2026-06-07T05:10:41Z"
 }
@@ -199,10 +199,10 @@ CWE-312: Cleartext Storage of Sensitive Information
 OWASP Top 10 2021 – A02: Cryptographic Failures
 
 #### Description
-Using the EC2 instance role credentials stolen via SSRF, a private S3 bucket (`cg-secret-s3-bucket-cgid6g772fuqu6`) was discovered. Within this bucket, an AWS credentials file was stored in plaintext at `aws/credentials`, containing long-lived IAM access keys for a third user (`shepard`). These credentials provided Lambda list and invoke permissions, enabling the final privilege escalation step.
+Using the EC2 instance role credentials stolen via SSRF, a private S3 bucket (`cg-s.uqu6`) was discovered. Within this bucket, an AWS credentials file was stored in plaintext at `aws/credentials`, containing long-lived IAM access keys for a third user (`shepard`). These credentials provided Lambda list and invoke permissions, enabling the final privilege escalation step.
 
 #### Affected Functionality
-- S3 bucket: `cg-secret-s3-bucket-cgid6g772fuqu6`
+- S3 bucket: `cg..g772fuqu6`
 - Object: `aws/credentials`
 
 #### Steps to Reproduce
@@ -224,8 +224,8 @@ Using the EC2 instance role credentials stolen via SSRF, a private S3 bucket (`c
 The downloaded credentials file contained long-lived IAM access keys in plaintext:
 ```
 [default]
-aws_access_key_id = AKIAVVYTW6AMCZUILW7B
-aws_secret_access_key = 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
+aws_access_key_id = AKIA..LW7B
+aws_secret_access_key = HxB...Zo8U3
 region = us-east-1
 ```
 These were confirmed to belong to IAM user `shepard-cgid6g772fuqu6` via `aws sts get-caller-identity`.

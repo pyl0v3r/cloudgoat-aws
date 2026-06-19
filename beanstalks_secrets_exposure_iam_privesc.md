@@ -23,8 +23,8 @@ aws sts get-caller-identity --profile cloudgoat_beanstalk
 ```
 ```json
 {
-    "UserId": "AIDAVVYTW6AMEB4MKMQBX",
-    "Account": "390346502168",
+    "UserId": "AIDAVV...MQBX",
+    "Account": "3...02168",
     "Arn": "arn:aws:...."
 }
 ```
@@ -96,7 +96,7 @@ CWE-798: Use of Hard-coded Credentials
 OWASP Top 10 2021 – A07: Identification and Authentication Failures
 
 #### Description
-The `cgid40f7j9opmj_low_priv_user` had sufficient Elastic Beanstalk read permissions to call `elasticbeanstalk:DescribeConfigurationSettings`. The returned configuration included the application's environment variables in plaintext, fully visible via the API to any principal with describe access on the environment. These variables contained a complete, active IAM access key and secret key pair (`SECONDARY_ACCESS_KEY` / `SECONDARY_SECRET_KEY`) belonging to a second IAM user.
+The `low_priv_user` had sufficient Elastic Beanstalk read permissions to call `elasticbeanstalk:DescribeConfigurationSettings`. The returned configuration included the application's environment variables in plaintext, fully visible via the API to any principal with describe access on the environment. These variables contained a complete, active IAM access key and secret key pair (`SECONDARY_ACCESS_KEY` / `SECONDARY_SECRET_KEY`) belonging to a second IAM user.
 
 #### Affected Functionality
 - Elastic Beanstalk application: `cgid40f7j9opmj-app`
@@ -192,7 +192,7 @@ $ aws iam create-access-key --user-name cgid40f7j9opmj_admin_user --profile clou
 {
     "AccessKey": {
         "UserName": "cgid40f7j9opmj_admin_user",
-        "AccessKeyId": "AKIAVVYTW6AMIX7H6NUS",
+        "AccessKeyId": "AKI...IX7H6NUS",
         "Status": "Active",
         "SecretAccessKey": "ix+8e4dwd....wmlLu7d8mGmsTkhNDZ",
         "CreateDate": "2026-06-07T20:52:36+00:00"
@@ -201,8 +201,8 @@ $ aws iam create-access-key --user-name cgid40f7j9opmj_admin_user --profile clou
 
 $ aws sts get-caller-identity --profile cloudgoat_beanstalk_admin
 {
-    "UserId": "AIDAVVYTW6AMDZ74YNV5U",
-    "Account": "390346502168",
+    "UserId": "AID..DZ74YNV5U",
+    "Account": "3..6502168",
     "Arn": "arn:aws:iam:...j_admin_user"
 }
 ```
@@ -318,7 +318,7 @@ To avoid ongoing AWS charges and to leave the environment in a clean state after
    ```bash
    aws iam update-access-key \
      --user-name cgid40f7j9opmj_admin_user \
-     --access-key-id AKIAVVYTW6AMIX7H6NUS \
+     --access-key-id AKIAVV..AMH6NUS \
      --status Inactive \
      --profile cloudgoat_beanstalk_secondary
    ```
@@ -326,7 +326,7 @@ To avoid ongoing AWS charges and to leave the environment in a clean state after
    ```bash
    aws iam delete-access-key \
      --user-name cgid40f7j9opmj_admin_user \
-     --access-key-id AKIAVVYTW6AMIX7H6NUS \
+     --access-key-id AK..H6NUS \
      --profile cloudgoat_beanstalk_secondary
    ```
 2. **Destroy the CloudGoat scenario** to tear down all provisioned infrastructure (Beanstalk application/environment, IAM users/policies, Secrets Manager secret) and avoid continued billing:
