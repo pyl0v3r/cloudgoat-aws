@@ -160,9 +160,9 @@ The `migrate_secrets.ps1` script contained hardcoded AWS IAM access key and secr
 `aws sts get-caller-identity` confirmed successful authentication as:
 ```json
 {
-    "UserId": "AIDA3SFMDAPOYPM3X2TB7",
-    "Account": "794929857501",
-    "Arn": "arn:aws:iam::794929857501:user/pam-test"
+    "UserId": "AIDA3...M3X2TB7",
+    "Account": "79..57501",
+    "Arn": "arn:..."
 }
 ```
 Using these credentials, the previously access-denied `migration-files/` prefix was accessible, and `test-export.xml` was downloaded — containing further credentials for multiple systems (see next finding).
@@ -233,7 +233,7 @@ aws sts get-caller-identity --profile pwnedlabss3_2
 {
     "UserId": "AIDA3SFMDAPOWKM6ICH4K",
     "Account": "794929857501",
-    "Arn": "arn:aws:iam::794929857501:user/it-admin"
+    "Arn": "arn:aw..."
 }
 ```
 

